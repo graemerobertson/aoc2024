@@ -35,8 +35,8 @@ pub(crate) fn day12() {
                 // We do that by considering each vertex, and counting the plots within the region at the vertex.
                 let mut max_x = 0;
                 let mut max_y = 0;
-                let mut min_x = std::usize::MAX;
-                let mut min_y = std::usize::MIN;
+                let mut min_x = usize::MAX;
+                let mut min_y = usize::MIN;
 
                 for plot in &region {
                     if plot.0 > max_x {

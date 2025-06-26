@@ -18,7 +18,7 @@ pub(crate) fn day08() {
             if c != '.' {
                 antennas
                     .entry(c)
-                    .or_insert_with(Vec::new)
+                    .or_default()
                     .push((col_index as i32, row_index as i32));
             }
         }

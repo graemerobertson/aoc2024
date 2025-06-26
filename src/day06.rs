@@ -31,7 +31,7 @@ fn check_if_new_obstacle_creates_loop(
     new_obstacle: &(usize, usize),
     guard_start_location: &(usize, usize),
     guard_start_direction: &Direction,
-    grid: &Vec<Vec<Point>>,
+    grid: &[Vec<Point>],
 ) -> bool {
     let mut guard_location = *guard_start_location;
     let mut guard_direction = *guard_start_direction;

@@ -13,8 +13,8 @@ pub(crate) fn day05() {
     //
     // Create a map where the key is the page number and the value is a set of page numbers that must come before it
     let mut page_ordering_rules: HashMap<u32, HashSet<u32>> = HashMap::new();
-    for i in 0..final_rule_index + 1 {
-        let parts: Vec<u32> = lines[i]
+    for line in lines.iter().take(final_rule_index + 1) {
+        let parts: Vec<u32> = line
             .split("|")
             .map(|x| x.trim().parse::<u32>().unwrap())
             .collect();
@@ -27,7 +27,7 @@ pub(crate) fn day05() {
     // Process the updates
     let mut part1_sum = 0;
     let mut part2_sum = 0;
-    for i in start_of_updates_index..lines.len() {
+    for line in lines.iter().skip(start_of_updates_index) {
         // Our strategy is to process the page numbers one at a time
         //  - If the page number has no dependencies that feature later in the list, it's already in the right place
         //  - If the page number does have dependencies that feature later in the list, and therefore is not in the
@@ -37,7 +37,7 @@ pub(crate) fn day05() {
         // This may not be the most efficient algorithm, but we will eventually arrive at the correct order
         //
         // Note that we assume that the page numbers are unique and that there are no cycles in the dependencies
-        let mut page_numbers: Vec<u32> = lines[i]
+        let mut page_numbers: Vec<u32> = line
             .split(',')
             .map(|x| x.trim().parse::<u32>().unwrap())
             .collect();
@@ -60,7 +60,7 @@ pub(crate) fn day05() {
                 if future_page_numbers.is_disjoint(dependencies) {
                     // This page number is in the correct place and we're done with it
                     correct_page_numbers.push(*page_number);
-                    future_page_numbers.remove(&page_number);
+                    future_page_numbers.remove(page_number);
                 } else {
                     // This page number is not in the correct place, so push it to the end of the list
                     page_numbers.push(*page_number);

@@ -92,9 +92,9 @@ fn calculate_points_to_move(
 }
 
 fn move_points(
-    points_to_move: &mut Vec<(isize, isize)>,
+    points_to_move: &mut [(isize, isize)],
     movement: (isize, isize),
-    grid: &Vec<Vec<char>>,
+    grid: &[Vec<char>],
 ) -> Vec<Vec<char>> {
     // Assume that the first point is the robot's current position. We want to sort the rest of the points to move by
     // distance from the robot - and move the furthest away points first.
@@ -107,8 +107,8 @@ fn move_points(
             .sort_by(|a: &(isize, isize), b| ((b.0 - start.0).abs()).cmp(&(a.0 - start.0).abs()));
     }
 
-    let mut new_grid: Vec<Vec<char>> = grid.clone();
-    for point in points_to_move.into_iter() {
+    let mut new_grid: Vec<Vec<char>> = grid.to_owned();
+    for point in points_to_move.iter_mut() {
         // Move point.
         new_grid[(point.0 + movement.0) as usize][(point.1 + movement.1) as usize] =
             grid[point.0 as usize][point.1 as usize];
@@ -125,13 +125,13 @@ fn update_grid(
     instruction: (isize, isize),
     grid: &mut Vec<Vec<char>>,
 ) {
-    let points_to_move = calculate_points_to_move(robot_location.clone(), instruction, &grid);
+    let points_to_move = calculate_points_to_move(*robot_location, instruction, grid);
     if let Some(mut points) = points_to_move {
         *robot_location = (
             robot_location.0 + instruction.0,
             robot_location.1 + instruction.1,
         );
-        *grid = move_points(&mut points, instruction, &grid)
+        *grid = move_points(&mut points, instruction, grid)
     }
 }
 
@@ -139,7 +139,7 @@ pub(crate) fn day15() {
     let f: File = File::open("data/day15.txt").unwrap();
     let reader: BufReader<File> = BufReader::new(f);
     let lines = reader.lines().collect::<io::Result<Vec<String>>>().unwrap();
-    let start_of_instructions = lines.iter().position(|l| *l == "").unwrap();
+    let start_of_instructions = lines.iter().position(|l| l.is_empty()).unwrap();
     let grid_lines = &lines[..start_of_instructions];
     let instruction_lines = &lines[start_of_instructions + 1..];
 

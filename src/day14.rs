@@ -25,7 +25,7 @@ pub(crate) fn day14() {
         lazy_static! {
             static ref INPUT_RE: Regex = Regex::new(r"p=(\d+),(\d+) v=(-?\d+),(-?\d+)").unwrap();
         }
-        let captures = INPUT_RE.captures(&line).unwrap();
+        let captures = INPUT_RE.captures(line).unwrap();
         let x_start = captures[1].parse::<i32>().unwrap();
         let y_start = captures[2].parse::<i32>().unwrap();
         let x_velocity = captures[3].parse::<i32>().unwrap();

@@ -43,7 +43,7 @@ fn solve_equation(
             }
         }
     }
-    return false;
+    false
 }
 
 pub(crate) fn day07() {

@@ -8,10 +8,8 @@ fn safe_report(report: &[i32]) -> bool {
             return true;
         }
     // Gradually increasing candidate
-    } else if report[0] < report[1] {
-        if report.windows(2).all(|l| l[0] < l[1] && l[0] >= l[1] - 3) {
-            return true;
-        }
+    } else if report[0] < report[1] && report.windows(2).all(|l| l[0] < l[1] && l[0] >= l[1] - 3) {
+        return true;
     }
     false
 }

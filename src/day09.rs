@@ -51,8 +51,8 @@ pub(crate) fn day09() {
             if disk_clone.len() > i {
                 disk[i] = new_value;
             } else {
-                for j in original_disk_clone_len..disk.len() {
-                    disk[j] = Block::Space;
+                for block in disk.iter_mut().skip(original_disk_clone_len) {
+                    *block = Block::Space;
                 }
                 break;
             }

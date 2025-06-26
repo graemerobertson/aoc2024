@@ -18,9 +18,9 @@ fn calculate_tokens(x_a: i64, y_a: i64, x_b: i64, y_b: i64, x_prize: i64, y_priz
         let b_presses = (x_prize * x_multiplier - y_prize * y_multiplier)
             / (x_b * x_multiplier - y_b * y_multiplier);
         let a_presses = (x_prize - (x_b * b_presses)) / x_a;
-        return 3 * a_presses + b_presses;
+        3 * a_presses + b_presses
     } else {
-        return 0;
+        0
     }
 }
 
@@ -28,7 +28,7 @@ pub(crate) fn day13() {
     let f: File = File::open("data/day13.txt").unwrap();
     let reader: BufReader<File> = BufReader::new(f);
     let mut lines = reader.lines().collect::<io::Result<Vec<String>>>().unwrap();
-    lines.retain(|s| *s != "");
+    lines.retain(|s| !s.is_empty());
 
     let mut part1_sum = 0;
     let mut part2_sum = 0;
